@@ -30,18 +30,29 @@ const userName = new Schema<UserName>({
 const studentSchema = new Schema<Student>({
   id: { type: String },
   name: userName,
-  gender: ["male", "female"],
+  gender: {
+    type: String,
+    enum: ["male", "female", "others"],
+    required: true,
+  },
   dateOfBirth: { type: String },
   email: { type: String, required: true },
   contactNo: { type: String, required: true },
   emergencyContactNo: { type: String },
-  bloodGroup: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
+  bloodGroup: {
+    type: String,
+    enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],
+  },
   presentAddress: { type: String },
   parmanentAddress: { type: String },
   guardian: guardian,
   localGuardian: localGuardian,
   profileImg: { type: String },
-  isActive: ["active", "inactive"],
+  isActive: {
+    type: String,
+    enum: ["active", "block"],
+    default : "active"
+  },
 });
 
-export const StudentModel  = model<Student>("student", studentSchema)
+export const StudentModel = model<Student>("student", studentSchema);
