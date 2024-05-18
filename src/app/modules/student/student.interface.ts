@@ -23,9 +23,8 @@ export interface Student {
   id: string;
   name: UserName;
   gender: "male" | "female";
-  dateOfBirth: string;
+  dateOfBirth?: string;
   email: string;
-  avatar?: string;
   contactNo: string;
   emergencyContactNo: string;
   bloodGroup: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
