@@ -50,7 +50,7 @@ const studentValidationSchema = Joi.object({
     "AB-"
   ),
   presentAddress: Joi.string(),
-  permanentAddress: Joi.string(),
+  parmanentAddress: Joi.string(),
   guardian: guardianSchema.required(),
   localGuardian: localGuardianSchema.required().messages({
     "any.required": "local guardian is required",

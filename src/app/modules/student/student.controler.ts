@@ -15,7 +15,7 @@ const createStudent = async (req: Request, res: Response) => {
       });
     }
 
-    const result = await studentServices.createStudentDB(student);
+    const result = await studentServices.createStudentDB(value);
 
     res.status(200).json({
       success: true,
