@@ -22,17 +22,36 @@ const localGuardian = new Schema<LocalGuardian>({
 });
 
 const userName = new Schema<UserName>({
-  firstName: { type: String, required: true },
+  firstName: {
+    type: String,
+    required: [true, "first name is required"],
+    trim: true,
+    maxlength: [20, "first name can not be more then 20 character"],
+    validate: {
+      validator: function (value: string) {
+        const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1);
+        return firstNameStr === value;
+      },
+      message : '{VALUE}  is not capitalize format'
+    },
+  },
   middleName: { type: String },
   lastName: { type: String, required: true },
 });
 
 const studentSchema = new Schema<Student>({
-  id: { type: String },
-  name: userName,
+  id: { type: String, required: true, unique: true },
+  name: {
+    type: userName,
+    required: true,
+  },
   gender: {
     type: String,
-    enum: ["male", "female", "others"],
+    enum: {
+      values: ["male", "female", "others"],
+      message:
+        "{VALUE}The gender fields can be only one of the following : male, female , or other",
+    },
     required: true,
   },
   dateOfBirth: { type: String },
@@ -45,13 +64,19 @@ const studentSchema = new Schema<Student>({
   },
   presentAddress: { type: String },
   parmanentAddress: { type: String },
-  guardian: guardian,
-  localGuardian: localGuardian,
+  guardian: {
+    type: guardian,
+    required: true,
+  },
+  localGuardian: {
+    type: localGuardian,
+    required: [true, "local guardian is required"],
+  },
   profileImg: { type: String },
   isActive: {
     type: String,
     enum: ["active", "block"],
-    default : "active"
+    default: "active",
   },
 });
 
