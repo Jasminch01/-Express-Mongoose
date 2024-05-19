@@ -1,4 +1,4 @@
-import { Schema, model, connect } from "mongoose";
+import { Schema, model, connect, Model } from "mongoose";
 
 export interface Guardian {
   fatherName: string;
@@ -15,9 +15,9 @@ export interface UserName {
   lastName: string;
 }
 export interface LocalGuardian {
-    name : string;
-    contactNo : string;
-    occupation : string;
+  name: string;
+  contactNo: string;
+  occupation: string;
 }
 export interface Student {
   id: string;
@@ -31,7 +31,13 @@ export interface Student {
   presentAddress: string;
   parmanentAddress: string;
   guardian: Guardian;
-  localGuardian : LocalGuardian;
-  profileImg? : string;
-  isActive : "active" | "inactive"
+  localGuardian: LocalGuardian;
+  profileImg?: string;
+  isActive: "active" | "inactive";
 }
+
+export interface StudentMethods  {
+  isUserExists(id: string): Promise<Student | null>;
+};
+
+export type StudentModels = Model<Student, Record<string, never>, StudentMethods>;

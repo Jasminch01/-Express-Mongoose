@@ -3,6 +3,8 @@ import {
   Guardian,
   LocalGuardian,
   Student,
+  StudentMethods,
+  StudentModels,
   UserName,
 } from "./student/student.interface";
 
@@ -32,14 +34,14 @@ const userName = new Schema<UserName>({
         const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1);
         return firstNameStr === value;
       },
-      message : '{VALUE}  is not capitalize format'
+      message: "{VALUE}  is not capitalize format",
     },
   },
   middleName: { type: String },
   lastName: { type: String, required: true },
 });
 
-const studentSchema = new Schema<Student>({
+const studentSchema = new Schema<Student, StudentModels, StudentMethods>({
   id: { type: String, required: true, unique: true },
   name: {
     type: userName,
@@ -80,4 +82,9 @@ const studentSchema = new Schema<Student>({
   },
 });
 
-export const StudentModel = model<Student>("student", studentSchema);
+studentSchema.methods.isUserExists = async function(id : string){
+  const existingUser = await StudentModel.findOne({id})
+  return existingUser;
+}
+
+export const StudentModel = model<Student, StudentModels>("student", studentSchema);
