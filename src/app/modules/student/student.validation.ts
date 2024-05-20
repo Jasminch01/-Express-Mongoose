@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { join } from "path";
 
 const guardianSchema = Joi.object({
   fatherName: Joi.string(),
@@ -20,16 +21,17 @@ const userNameSchema = Joi.object({
     .required()
     .trim()
     .max(20)
-    .pattern(/^[A-Z][a-zA-Z]*$/, 'capitalize format')
+    .pattern(/^[A-Z][a-zA-Z]*$/, "capitalize format")
     .messages({
-      'string.pattern.name': '{#value} is not in capitalize format',
+      "string.pattern.name": "{#value} is not in capitalize format",
     }),
-  middleName: Joi.string().allow(''),
+  middleName: Joi.string().allow(""),
   lastName: Joi.string().required(),
 });
 
 const studentValidationSchema = Joi.object({
   id: Joi.string().required(),
+  password: Joi.string().required().max(20),
   name: userNameSchema.required(),
   gender: Joi.string().valid("male", "female", "others").required().messages({
     "any.only":
@@ -57,6 +59,7 @@ const studentValidationSchema = Joi.object({
   }),
   profileImg: Joi.string(),
   isActive: Joi.string().valid("active", "block").default("active"),
+  isDeleted : Joi.boolean()
 });
 
 export default studentValidationSchema;

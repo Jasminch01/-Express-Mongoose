@@ -21,6 +21,7 @@ export interface LocalGuardian {
 }
 export interface Student {
   id: string;
+  password : string;
   name: UserName;
   gender: "male" | "female";
   dateOfBirth?: string;
@@ -34,10 +35,18 @@ export interface Student {
   localGuardian: LocalGuardian;
   profileImg?: string;
   isActive: "active" | "inactive";
+  isDeleted : boolean
 }
 
-export interface StudentMethods  {
+//create static method
+export interface StudentModels extends Model<Student> {
   isUserExists(id: string): Promise<Student | null>;
-};
+}
 
-export type StudentModels = Model<Student, Record<string, never>, StudentMethods>;
+//create coustom instance method
+
+// export interface StudentMethods  {
+//   isUserExists(id: string): Promise<Student | null>;
+// };
+
+// export type StudentModels = Model<Student, Record<string, never>, StudentMethods>;
