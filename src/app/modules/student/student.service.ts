@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
-import { StudentModel } from "../student.model";
 import { Student } from "./student.interface";
+import { StudentModel } from "./student.model";
 
 const createStudentDB = async (student: Student) => {
   if (await StudentModel.isUserExists(student.id)) {

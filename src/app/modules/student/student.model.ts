@@ -6,9 +6,9 @@ import {
   // StudentMethods,
   StudentModels,
   UserName,
-} from "./student/student.interface";
+} from "./student.interface";
 import bcrypt from "bcrypt";
-import config from "../config";
+import config from "../../config";
 
 const guardian = new Schema<Guardian>({
   fatherName: { type: String },
