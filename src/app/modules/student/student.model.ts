@@ -45,6 +45,7 @@ const userName = new Schema<UserName>({
 
 const studentSchema = new Schema<Student, StudentModels>({
   id: { type: String, required: true, unique: true },
+  user : {type : Schema.Types.ObjectId},
   password: { type: String, required: true, unique: true },
   name: {
     type: userName,

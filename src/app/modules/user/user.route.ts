@@ -1,0 +1,11 @@
+import express from "express";
+
+
+const router = express.Router();
+
+router.post('/create-student', userController)
+
+
+export const userRouter = {
+    router
+}

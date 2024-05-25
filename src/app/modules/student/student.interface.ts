@@ -1,4 +1,4 @@
-import { Schema, model, connect, Model } from "mongoose";
+import { Schema, model, connect, Model, Types } from "mongoose";
 
 export interface Guardian {
   fatherName: string;
@@ -21,6 +21,7 @@ export interface LocalGuardian {
 }
 export interface Student {
   id: string;
+  user : Types.ObjectId;
   password : string;
   name: UserName;
   gender: "male" | "female";
