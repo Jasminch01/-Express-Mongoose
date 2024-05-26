@@ -11,7 +11,7 @@ const moduleRoutes = [
   },
   {
     path: "/students",
-    route: studentRoutes,
+    route: userRouter,
   },
 ];
 
