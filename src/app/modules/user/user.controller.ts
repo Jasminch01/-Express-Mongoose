@@ -1,7 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { userServices } from "./user.service";
+import sendResponse from "../../utils/sendResponse";
+import httpStatus from "http-status";
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { password, student } = req.body;
     // const { error, value } = studentValidationSchema.validate(student);
@@ -15,17 +21,19 @@ const createStudent = async (req: Request, res: Response) => {
     // }
     const result = await userServices.createStudentDB(password, student);
 
-    res.status(200).json({
+    sendResponse(res, {
       success: true,
-      message: "student created successfully",
+      statusCode: httpStatus.OK,
+      message: "student is created successfully",
       data: result,
     });
   } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || "somthing went wrong",
-      error: error,
-    });
+    // res.status(500).json({
+    //   success: false,
+    //   message: error.message || "somthing went wrong",
+    //   error: error,
+    // });
+    next(error);
   }
 };
 

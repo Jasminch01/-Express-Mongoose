@@ -20,7 +20,7 @@ const createStudentDB = async (password: string, student: Student) => {
   user.password = password || config.default_password;
   user.role = "student";
   //menually set id
-  user.id = "2030002";
+  user.id = "2030000";
   const newUser = await User.create(user);
 
   //createStudent
