@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { join } from "path";
 
 const guardianSchema = Joi.object({
   fatherName: Joi.string(),
@@ -58,7 +57,6 @@ const studentValidationSchema = Joi.object({
     "any.required": "local guardian is required",
   }),
   profileImg: Joi.string(),
-  isActive: Joi.string().valid("active", "block").default("active"),
   isDeleted : Joi.boolean()
 });
 

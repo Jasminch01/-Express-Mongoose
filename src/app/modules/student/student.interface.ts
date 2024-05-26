@@ -18,6 +18,7 @@ export interface LocalGuardian {
   name: string;
   contactNo: string;
   occupation: string;
+  address : string;
 }
 export interface Student {
   id: string;
@@ -31,12 +32,11 @@ export interface Student {
   emergencyContactNo: string;
   bloodGroup: "A+" | "A-" | "B+" | "B-" | "O+" | "O-" | "AB+" | "AB-";
   presentAddress: string;
-  parmanentAddress: string;
+  permanentAddress: string;
   guardian: Guardian;
   localGuardian: LocalGuardian;
   profileImg?: string;
-  isActive: "active" | "inactive";
-  isDeleted : boolean
+  isDeleted? : boolean
 }
 
 //create static method
