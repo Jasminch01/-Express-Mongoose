@@ -1,31 +1,25 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { studentServices } from "./student.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
 
-const getAllStudents = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const result = await studentServices.getAllStudentsDB();
-    sendResponse(res, {
-      success: true,
-      statusCode: httpStatus.OK,
-      message: "students are retrived successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+const catchAsync = (fn: RequestHandler) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    Promise.resolve(fn(req, res, next)).catch((error) => next(error));
+  };
 };
 
-const getSingleStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getAllStudents = catchAsync(async (req, res, next) => {
+  const result = await studentServices.getAllStudentsDB();
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "students are retrived successfully",
+    data: result,
+  });
+});
+
+const getSingleStudent: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await studentServices.getSingleStudentDB(id);
@@ -40,11 +34,7 @@ const getSingleStudent = async (
   }
 };
 
-const deleteStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const deleteStudent: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await studentServices.deleteStudentDB(id);
@@ -64,11 +54,7 @@ const deleteStudent = async (
   }
 };
 
-const updateStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const updateStudent: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
