@@ -1,26 +1,16 @@
-import { z } from "zod";
-import { Tmonths } from "./academicSemester.interface";
-import { string } from "joi";
-const months: Tmonths[] = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-const academicSemesterValidation = z.object({
-  name: z.enum(["Autumn", "Summer", "Fall"]),
-  year : z.date(),
-  code: z.enum(["01", "02", "03"]),
-  startMonth: z.enum([...months] as [string]),
-  endMonth: z.enum([...months] as [string]),
+import { z } from 'zod';
+import { AcademicSemesterCode, AcademicSemesterName, Months } from './academicSemester.constant';
+
+const createAcdemicSemesterValidationSchema = z.object({
+  body: z.object({
+    name: z.enum([...AcademicSemesterName] as [string, ...string[]]),
+    year: z.string(),
+    code: z.enum([...AcademicSemesterCode] as [string, ...string[]]),
+    startMonth: z.enum([...Months] as [string, ...string[]]),
+    endMonth: z.enum([...Months] as [string, ...string[]]),
+  }),
 });
 
-export default academicSemesterValidation;
+export const academicValidations = {
+  createAcdemicSemesterValidationSchema,
+}

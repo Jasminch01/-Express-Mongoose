@@ -16,16 +16,20 @@ const months: Tmonths[] = [
   "December",
 ];
 
-const academicSemesterSchema = new Schema<TacademicSemester>({
-  name: { type: String, enum: { values: ["Autumn", "Summer", "Fall"] } },
-  year : {type : Date},
-  code: { type: String, enum: { values: ["01", "02", "03"] } },
-  startMonth: { type: String, enum: months },
-  endMonth: { type: String, enum: months },
-});
+const academicSemesterSchema = new Schema<TacademicSemester>(
+  {
+    name: { type: String, enum: { values: ["Autumn", "Summer", "Fall"] } },
+    year: { type: String },
+    code: { type: String, enum: { values: ["01", "02", "03"] } },
+    startMonth: { type: String, enum: months },
+    endMonth: { type: String, enum: months },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 export const academicSemesterModel = model<TacademicSemester>(
   "academic-semister",
   academicSemesterSchema
 );
-
