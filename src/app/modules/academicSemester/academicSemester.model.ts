@@ -29,18 +29,19 @@ const academicSemesterSchema = new Schema<TacademicSemester>(
   }
 );
 
-academicSemesterSchema.pre("save", async function (next){
+//check semester is exist same year
+academicSemesterSchema.pre("save", async function (next) {
   const isSemisterExist = await academicSemesterModel.findOne({
-    year : this.year,
-    name : this.name
-  })
+    year: this.year,
+    name: this.name,
+  });
   if (isSemisterExist) {
-    throw new Error("Semester is already exist")
+    throw new Error("Semester is already exist");
   }
-  next()
-})
+  next();
+});
 
 export const academicSemesterModel = model<TacademicSemester>(
-  "academic-semister",
+  "academicSemester",
   academicSemesterSchema
 );

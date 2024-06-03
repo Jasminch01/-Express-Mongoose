@@ -1,10 +1,11 @@
 import config from "../../config";
+import { TacademicSemester } from "../academicSemester/academicSemester.interface";
 import { Student } from "../student/student.interface";
 import { StudentModel } from "../student/student.model";
 import { Iuser } from "./user.interface";
 import { User } from "./user.model";
 
-const createStudentDB = async (password: string, student: Student) => {
+const createStudentDB = async (password: string, payload: Student) => {
   // if (await User.isUserExists(student.id)) {
   //   throw new Error("user already exist");
   // }
@@ -19,18 +20,18 @@ const createStudentDB = async (password: string, student: Student) => {
   // }
   user.password = password || config.default_password;
   user.role = "student";
-  //menually set id
-  user.id = "2030000";
+  //academic semester year, code
+ 
   const newUser = await User.create(user);
 
   //createStudent
 
   if (Object.keys(newUser).length) {
     //set id _id as user
-    student.id = newUser.id;
-    student.user = newUser._id; //referance id
+    payload.id = newUser.id;
+    payload.user = newUser._id; //referance id
 
-    const newStudent = await StudentModel.create(student);
+    const newStudent = await StudentModel.create(payload);
     return newStudent;
   }
 };
