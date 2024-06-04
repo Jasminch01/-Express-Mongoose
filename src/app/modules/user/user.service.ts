@@ -1,27 +1,35 @@
 import config from "../../config";
 import { TacademicSemester } from "../academicSemester/academicSemester.interface";
+import { academicSemesterModel } from "../academicSemester/academicSemester.model";
 import { Student } from "../student/student.interface";
 import { StudentModel } from "../student/student.model";
 import { Iuser } from "./user.interface";
 import { User } from "./user.model";
+import { generateStudentId } from "./users.utlis";
 
 const createStudentDB = async (password: string, payload: Student) => {
-  // if (await User.isUserExists(student.id)) {
-  //   throw new Error("user already exist");
-  // }
-
   //create a user object
   const user: Partial<Iuser> = {};
-  //if password is not giver use default password
-  // if (!password) {
-  //     user.password = config.default_password
-  // }else{
-  //     user.password = password
-  // }
-  user.password = password || config.default_password;
+
+  user.password = password || (config.default_password as string);
+  //
   user.role = "student";
-  //academic semester year, code
- 
+
+  //find eacademicsemester info
+  const admissionSemester = await academicSemesterModel.findById(
+    payload.admissionSemester
+  );
+
+  //generated id
+  if (admissionSemester) {
+    // Generate ID
+    user.id = await generateStudentId(admissionSemester as TacademicSemester);
+  } else {
+    // Handle the case where admissionSemester is null
+    throw new Error("Admission semester not found");
+  }
+  // user.id = await generateStudentId(admissionSemester)
+
   const newUser = await User.create(user);
 
   //createStudent

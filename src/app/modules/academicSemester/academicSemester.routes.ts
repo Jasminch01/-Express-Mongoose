@@ -2,7 +2,6 @@ import express from "express";
 import { academicSemesterController } from "./academicSemester.controller";
 import validateRequestedData from "../../utils/validateRequestData";
 import { academicValidations } from "./academicSemester.validation";
-import { ZodObject, ZodOptional, ZodEnum, ZodString, ZodTypeAny } from "zod";
 const router = express.Router();
 
 router.post(
